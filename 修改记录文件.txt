@@ -1,0 +1,37 @@
+2023年5月20日
+
+bsp_task_rk3588commun.c 471行		
+修改将电源板的常规信息上报，从usart3修改到usart1，
+bsp_task_rk3588commun.c 474行
+加入了如果消息队列中不存在数据，其实就是GPS没接到数，从RS422串口上报0
+
+bsp_task.c 42行		
+修改GPS上电时的配置数据，从修改GPS上电时的配置数据，从修改GPS上电时的配置数据，从修改GPS上电时的配置数据，
+从 BSP_UART_Transmit_IT 的最后一个参数 sizeof(SucbufGNGGA) - 1 
+修改为 sizeof(SucbufGNGGA) 因为 -1 是多余的，并且之前传输一遍，现在传输2编为了保险起见
+
+
+bsp_task.c 399行
+auto_temperature_control，就是自动温控程序
+其函数内容在 bsp.c	110行
+
+
+由于刘辉阉割了第二个DS18B20，所以
+（这里是消息队列取数据）
+bsp_task_rk3588commun 343行		屏蔽了
+bsp_task_rk3588commun 356行		将原本放DS18B20_2的数据填入0
+bsp_task_rk3588commun 122行		取到消息队列数据的数量也屏蔽了
+
+bsp_task.c 290行屏蔽了
+bsp_task.c 347行屏蔽了
+
+
+bsp_task_rk3588commun
+945行	2023.5.21 应栾要求关机后加入自杀功能，其实就是关闭电池供电端口
+
+
+bsp_task
+429行	2023.5.21 应栾要求关机后加入10分钟自杀功能，其实就是关闭电池供电端口
+
+
+2023.5.21 应栾要求去掉应答式关机指令，断电后10分钟关机
